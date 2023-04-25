@@ -11,11 +11,11 @@ Developed this SPA for better understanding connection between front-end and bac
  + Routing (each customer has its own page);
 
 ## 🚀 Stack
-Frontend: Angular, ngRx;
-Backend: MongoDB, Express, Node.js;
-Auth: Firebase;
-Libraries: AngularFireAuth, AngularReactiveForms, AngularRouting and others.
-Additional: SASS, BEM.
++ Frontend: Angular, ngRx;
++ Backend: MongoDB, Express, Node.js;
++ Auth: Firebase;
++ Libraries: AngularFireAuth, AngularReactiveForms, AngularRouting and others.
++ Additional: SASS, BEM.
 
 ## 🌠 Motivation
 This project helped me to understand client-to-server interaction and architecture of Angular applications. 
