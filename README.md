@@ -3,7 +3,7 @@ App built with MEAN stack for better understanding connection between front-end 
 
  **Functionality**:
  + CRUD operations:
- 1. Create - add customers to mongoDB;
+ 1. Create - add customers;
  2. Read - search for customers in real time;
  3. Update - update customers;
  4. Delete - delete customers.
