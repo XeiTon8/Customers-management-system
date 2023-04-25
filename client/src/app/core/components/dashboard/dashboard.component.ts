@@ -122,6 +122,7 @@ export class DashboardComponent implements OnInit {
   addCustomer(customer: Customer) {
     this.customersService.createCustomer(customer).subscribe({
       next: (createdCustomer: Customer) => {
+        this.customersService.getCustomer(createdCustomer._id)
         this.store.dispatch(addCustomer({customer: createdCustomer}));
       },
       error: (error) => {
@@ -129,7 +130,6 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.popupsService.setCustomerCreated(true);
-    console.log(this.isCustomerCreated)
   }
 
 deleteCustomer(id: string) {
