@@ -11,7 +11,7 @@ Developed this SPA for better understanding connection between front-end and bac
  + Routing (each customer has its own page);
 
 ## 🚀 Stack
-Frontend: Angular;
+Frontend: Angular, ngRx;
 Backend: MongoDB, Express, Node.js;
 Auth: Firebase;
 Libraries: AngularFireAuth, AngularReactiveForms, AngularRouting and others.
