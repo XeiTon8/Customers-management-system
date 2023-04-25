@@ -1,5 +1,5 @@
 # 📜 Customer management system
-Developed this SPA for better understanding connection between front-end and back-end side of the application. App fetches data from mongoDB and then displays it to the user, allowing to perform CRUD operations.
+App built with MEAN stack for better understanding connection between front-end and back-end side of the application. Fetches data from mongoDB and then displays it to the user, allowing to perform CRUD operations.
 
  **Functionality**:
  + CRUD operations:
