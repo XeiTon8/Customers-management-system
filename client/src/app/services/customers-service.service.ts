@@ -41,7 +41,7 @@ export class CustomersService {
   }
 
   getCustomer(id: string): Observable<Customer> {
-    return this.httpClient.get<Customer>(`${this.url}/customers/${id}`)
+  return this.httpClient.get<Customer>(`${this.url}/customers/${id}`);
   }
 
   createCustomer(customer: Customer): Observable<Customer> {

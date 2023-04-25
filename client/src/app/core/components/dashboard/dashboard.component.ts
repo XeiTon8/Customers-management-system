@@ -75,6 +75,8 @@ export class DashboardComponent implements OnInit {
     this.customers$.subscribe(() => {
       if (!this.isDataFetched) {
         this.fetchCustomers();
+        this.isDataFetched = true;
+       
       }
     });
 
@@ -122,8 +124,8 @@ export class DashboardComponent implements OnInit {
   addCustomer(customer: Customer) {
     this.customersService.createCustomer(customer).subscribe({
       next: (createdCustomer: Customer) => {
-        this.customersService.getCustomer(createdCustomer._id)
         this.store.dispatch(addCustomer({customer: createdCustomer}));
+        this.customersService.getCustomer(createdCustomer._id);
       },
       error: (error) => {
         console.error(error);
