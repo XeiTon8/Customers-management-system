@@ -1,0 +1,117 @@
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 0;
+    
+}
+
+.header-left {
+    flex: 0 1 90px;
+    background: rgba(246, 250, 253, 0.9);
+    padding: 1.2%;
+    border-right: 1px solid gray;
+}
+
+.header__center {
+    flex: 1 1 auto;
+    background: rgba(246, 250, 253, 0.9);
+    padding: 1.6%;
+}
+
+.header__right {
+    background: rgba(238, 246, 251, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 1.2%;
+    position: relative;
+}
+
+.header__search {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #EAEEF4;
+    background-color: #fff;
+    background: url(../../../../assets/img/search-icon.svg) center no-repeat;
+    transition: all 0.2s ease-in-out;
+
+}
+
+.header__search--active {
+    width: 50px;
+    border: none;
+    background-color: #fff;
+    position: absolute;
+    left: 62%;
+    top: 19%;
+}
+
+.header__search-input {
+    display: none;
+    width: 0;
+    height: 50px;
+    border: none;
+    border-radius: 0;
+    padding: 0 10px;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+  }
+
+  .header__search-input--active {
+    display: inline-block;
+    outline: none;
+    width: 51%;
+  }
+
+.header__button {
+    background: #514EF3;
+    border-radius: 30px;
+    border: none;
+    width: 130px;
+    height: 40px;
+    padding: 10px 16px 10px 20px;
+
+    & span {
+        color: #fff;
+    }
+
+    
+  }
+
+.header__add-new {
+   
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    & > :nth-child(2) {
+        font-size: 20px;
+    }
+
+}
+
+.header__profile {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #EAEEF4;
+    border-radius: 50%;
+    background: url(../../../../assets/img/user-icon.png) center no-repeat;
+    background-size: cover;
+    background-color: #fff;
+}
+
+.header__title {
+    font-family: Inter;
+    font-weight: 700;
+}
+
+button {
+    cursor: pointer;
+}

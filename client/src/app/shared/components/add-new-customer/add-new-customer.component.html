@@ -1,0 +1,38 @@
+<form class="add-new__form form" [formGroup]="customersForm" (ngSubmit)="submitForm()">
+    <div class="form__header-wrapper">
+      <h5 class="form__title">Add new customer</h5>
+      <app-close-popup-button></app-close-popup-button>
+    </div>
+    <div class="form__avatar">
+      <label for="">Avatar</label>
+      <input type="file" (change)="onFileChange($event)" name="" id="">
+    </div>
+    <div class="form__names">
+      <label for="firstName">First name</label>
+      <label for="lastName" class="form__right-label" >Last name</label>
+    </div>
+    <div class="form__names">
+      
+      <input type="text" formControlName="firstName" name="firstName" id="firstName"/>
+      <input type="text" formControlName="lastName" name="lastName" id="lastName">
+    </div>
+    <div class="form__email-and-phone">
+      <label for="">Email</label>
+      <label for="" class="form__right-label">Phone</label>
+    </div>
+    <div class="form__email-and-phone">
+        <input type="tel" formControlName="phone" name="" id="">
+        <input type="email" formControlName="email" name="" id="">
+      </div>
+    <div class="form-address-info" formGroupName="address">
+      <label class="form-address-info__title" for="">Address</label>
+      <input class="form-address-info__street-address" type="text" formControlName="streetAddress" name="" id="" placeholder="Street address">
+      <input class="form-address-info__city" type="text" formControlName="city" name="" id="" placeholder="City">
+      <input class="form-address-info__state" type="text" formControlName="state" name="" id="" placeholder="State/Province">
+      <input class="form-address-info__zip-code" type="text" formControlName="zipCode" name="" id="" placeholder="Zip">
+    </div>
+    <div class="form__buttons-wrapper">
+      <span (click)="cancelForm()">Cancel</span>
+      <button class="confirm-btn" type="submit" [disabled]="customersForm.invalid">Save customer</button>
+    </div>
+  </form>

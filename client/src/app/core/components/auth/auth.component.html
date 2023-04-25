@@ -1,0 +1,47 @@
+<div class="auth__container">
+    
+    <h1 class="auth__title" [ngClass]="{'element__hidden': !isComponentLoaded.isLoaded, 'element__shown': isComponentLoaded.isLoaded}">Welcome</h1>
+
+<form class="app-form" *ngIf="isLogIn" [ngClass]="{'element__hidden': !isComponentLoaded.isLoaded, 'element__shown': isComponentLoaded.isLoaded}" [formGroup]="form"> 
+    <input type="email" class="app-form__input" [ngClass]="{'app-form__input--invalid': isInvalid('email')}" placeholder="Email" formControlName="email" #userEmail required>
+    <div *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)">
+        <div *ngIf="form.controls['email'].errors?.['required']">Email is required.</div> 
+        <div *ngIf="form.controls['email'].errors?.['email']">Email should be valid.</div>  
+    </div>
+    <input type="password" class="app-form__input" [ngClass]="{'app-form__input--invalid': isInvalid('pass')}" placeholder="Password" formControlName="pass" #userPass required>
+    <div *ngIf="errorMessage">Email or password invalid, try again.</div>
+    <button class="auth__confirm-btn"(click)="signIn(userEmail.value, userPass.value)">Sign in</button>
+    <span (click)="goSignUp()" class="auth__switch-mode">No account yet? Sign up</span>
+</form>
+
+<form class="app-form" *ngIf="isSignUp" [ngClass]="{'element__hidden': !isComponentLoaded.isLoaded, 'element__shown': isComponentLoaded.isLoaded}" [formGroup]="form">
+    <input type="email" class="app-form__input" [ngClass]="{'app-form__input--invalid': isInvalid('email')}" formControlName="email" #userEmail required placeholder="Email" (input)="onEmailInput()">
+    <div *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)">
+        <div *ngIf="form.controls['email'].errors?.['required']">Email is required.</div> 
+        <div *ngIf="form.controls['email'].errors?.['email']">Email should be valid.</div>  
+    </div>
+    <input type="password" class="app-form__input" [ngClass]="{'app-form__input--invalid': isInvalid('pass')}" placeholder="Password" formControlName="pass" #userPass required>
+    <div *ngIf="form.controls['pass'].invalid && (form.controls['pass'].dirty || form.controls['pass'].touched)">
+        <div *ngIf="form.controls['pass'].errors?.['required']">Password is required.</div>
+        <div *ngIf="form.controls['pass'].errors?.['invalidPassword']">
+            <ul>
+                <li>Password should have:</li>
+                <li>Minimum 8 characters</li>
+                <li>At least 1 uppercase letter</li>
+                <li>At least 1 lowercase letter</li>
+                <li>At least 1 special character</li>
+                <li>At least 1 digit</li>
+            </ul>
+        </div>
+    </div>
+    <input type="password" class="app-form__input" [ngClass]="{'app-form__input--invalid': isInvalid('pass')}" placeholder="Confirm password" formControlName="confirmPass" #userPass required>
+    <div *ngIf="form.controls['confirmPass'].invalid && (form.controls['confirmPass'].dirty || form.controls['confirmPass'].touched)">
+        <div *ngIf="form.controls['confirmPass'].errors?.['invalidConfirmPass']">Password does not match.</div>
+    </div>
+   
+    <button class="auth__confirm-btn" (click)="authService.signUp(userEmail.value, userPass.value)">Sign up</button>
+    <span (click)="goLogIn()" class="auth__switch-mode">Already have an account? Log in</span>
+</form>
+
+</div>
+

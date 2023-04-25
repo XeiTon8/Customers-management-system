@@ -1,0 +1,56 @@
+<app-header></app-header>
+
+<app-overlay class="overlay" [class.overlay-hidden]="!(isOverlayVisible$ | async)" [class.overlay-active]="isOverlayVisible$ | async"></app-overlay>
+<app-add-new-customer class="add-new-form"
+[ngClass]="{'form-hidden': !(isAddPopupVisible$ | async), 'form-active': isAddPopupVisible$ | async}"
+(formSubmitted)="addCustomer($event)">
+</app-add-new-customer>
+<app-edit-customer *ngIf="isEditOpened$ | async"></app-edit-customer>
+   
+<div class="dashboard__container">
+
+    <ng-container *ngIf="(customers$ | async)?.length; else noCustomers">
+        <table>
+            <thead>
+             <th class="avatar-th">Avatar</th>
+             <th>Name</th>
+             <th>Email</th>
+             <th>Phone</th>
+             <th>Address</th>
+             <th>Edit</th>
+             <th>Delete</th>
+            </thead>
+            <tbody>
+             <tr *ngFor="let customer of filteredCustomers$ | async; trackBy: trackByCustomerId">
+                 <td class="td-avatar"><img src="{{customer.avatarUrl}}"></td>
+                 <td class="td-name">
+                    <span [routerLink]="['customers/', customer._id]">{{customer.firstName}}</span> 
+                    <span [routerLink]="['customers/', customer._id]">{{customer.lastName}}</span>
+                </td>
+                 <td class="td-email">{{customer.email}}</td>
+                 <td class="td-phone">{{customer.phone}}</td>
+                 <td class="td-address"><span>{{customer.address?.zipCode}}</span> <span>{{customer.address?.streetAddress}}</span> <span>{{customer.address?.city}}</span> <span>{{customer.address?.state}}</span></td>
+                 <td class="td-edit"> <button (click)="editCustomer()" [routerLink]="['edit/', customer._id]" class="edit-customer-btn"></button></td>
+                 <td><button class="td-delete" (click)="deleteCustomer(customer._id)">Delete</button></td>
+             </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+   <ng-template #noCustomers>
+        <h2 class="no-customers-title">No customers found.</h2>
+   </ng-template>
+
+   <div class="customer-popup" [ngClass]="{'customer-saved-popup': !isCustomerCreated, 'customer-popup--active': isCustomerCreated}">
+    <span> 🎉 Customer saved</span>
+   </div>
+
+   <div class="customer-popup" [ngClass]="{'customer-saved-popup': !isCustomerDeleted, 'customer-popup--active': isCustomerDeleted}">
+    <span> 🔥 Customer deleted</span>
+   </div>
+</div>
+
+
+ 
+
+

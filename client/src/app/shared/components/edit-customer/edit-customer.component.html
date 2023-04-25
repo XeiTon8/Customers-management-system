@@ -1,0 +1,40 @@
+<div class="edit-customer__container">
+  <form class="edit-customer__form form" [formGroup]="editCustomerForm" (ngSubmit)="updateCustomer()">
+    <div class="form__header-wrapper">
+      <h3 class="form__title">Edit a customer</h3>
+      <app-close-popup-button type="button"></app-close-popup-button>
+    </div>
+    <div class="form__avatar">
+      <label for="">Avatar</label>
+      <input type="file" name="" id="">
+    </div>
+    <div class="form__names">
+      <label for="firstName">First name</label>
+      <label for="lastName" class="form__right-label" >Last name</label>
+    </div>
+    <div class="form__names">
+      
+      <input type="text" formControlName="firstName" name="firstName" id="firstName"/>
+      <input type="text" formControlName="lastName" name="lastName" id="lastName">
+    </div>
+    <div class="form__email-and-phone">
+      <label for="">Email</label>
+      <label for="" class="form__right-label">Phone</label>
+    </div>
+    <div class="form__email-and-phone">
+        <input type="tel" formControlName="phone" name="" id="">
+        <input type="email" formControlName="email" name="" id="">
+      </div>
+    <div class="form-address-info" formGroupName="address">
+      <label class="form-address-info__title" for="">Address</label>
+      <input class="form-address-info__street-address" type="text" formControlName="streetAddress" name="" id="">
+      <input class="form-address-info__city" type="text" formControlName="city" name="" id="">
+      <input class="form-address-info__state" type="text" formControlName="state" name="" id="">
+      <input class="form-address-info__zip-code" type="text" formControlName="zipCode" name="" id="">
+    </div>
+    <div class="form__buttons-wrapper">
+      <span>Cancel</span>
+      <button class="confirm-btn" type="submit">Save customer</button>
+    </div>
+  </form>
+</div>
