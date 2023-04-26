@@ -1,6 +1,8 @@
 # 📜 Customer management system
 App built with MEAN stack for better understanding connection between front-end and back-end side of the application. Fetches data from mongoDB and then displays it to the user, allowing to perform CRUD operations.
 
+**Demo**: ![Demo-gif](https://github.com/XeiTon8/Customers-management-system/blob/main/Example.gif)
+
  **Functionality**:
  + CRUD operations:
  1. Create - add customers;
@@ -33,3 +35,8 @@ Divided the app into different modules:
 
 **3. Using ngRx and rxJS.**
 Instailled ngRx to get a better understanding of reactive programming and practice my skills with Flux architecture.
+
+## 🔨 To-Do
+- [ ] Create sorting
+- [ ] Create filtering
+- [ ] Add total numbers of customers
