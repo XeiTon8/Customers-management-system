@@ -28,19 +28,23 @@ async signIn(email: string, password: string) {
    
   } catch(error: any) {
    console.log(error)
-  }
-
-}
+   throw error;
+  }}
 
 signUp(email: string, password: string) {
-return this.afAuth.createUserWithEmailAndPassword(email, password) .then(() => {
-  this.afAuth.authState.subscribe((user: any) => {
-    if (user) {
-      this.router.navigate(['dashboard']);
-    }
-  })
-});
-}
+  try {
+    return this.afAuth.createUserWithEmailAndPassword(email, password).then(() => {
+      this.afAuth.authState.subscribe((user: any) => {
+        if (user) {
+          this.router.navigate(['dashboard']);
+          this.isLoggedIn = true;
+        }
+        })
+      });
+  } catch(e) {
+    console.error(e)
+    throw e;
+  }}
 
 signOut() {
 this.isLoggedIn = false;

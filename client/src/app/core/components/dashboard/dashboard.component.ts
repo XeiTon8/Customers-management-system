@@ -14,7 +14,7 @@ import { CustomersService } from 'src/app/services/customers-service.service';
 import { Customer } from 'src/app/features/models/ICustomer';
 
 import { ConfirmPopupsService } from 'src/app/services/confirm-popups.service';
-import { Observable, take, filter, combineLatest, distinctUntilChanged, map} from 'rxjs';
+import { Observable, take, filter, combineLatest, distinctUntilChanged, map, of} from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,31 +30,22 @@ import { Observable, take, filter, combineLatest, distinctUntilChanged, map} fro
 })
 export class DashboardComponent implements OnInit {
 
- 
   constructor(private store: Store<AppState>, private customersService: CustomersService, private popupsService: ConfirmPopupsService)  {}
 
   customers$: Observable<Customer[]> = new Observable<Customer[]>();
   filteredCustomers$:Observable<Customer[]> = new Observable<Customer[]>();
 
-  isDataFetched = false;
-
   // Form
-  isAddPopupVisible = false;
-  isOverlayVisible = false;
+  isAddPopupVisible$ = this.store.pipe(select(selectIsAddNewOpened));;
+  isOverlayVisible$ = this.store.pipe(select(selectIsOverlay));
+  isEditOpened$ = this.store.pipe(select(selectIsEditOpened));
 
   // Customers
   isCustomerCreated = false;
   isCustomerDeleted = false;
- 
+  isDataFetched = false;
 
-
-  isAddPopupVisible$ = this.store.pipe(select(selectIsAddNewOpened));;
-  isOverlayVisible$ = this.store.pipe(select(selectIsOverlay));
-  isEditOpened$ = this.store.pipe(select(selectIsEditOpened));
   searchValue$ = this.store.pipe(select(selectSearchValue));
-
-
-
 
   trackByCustomerId(index: number, customer: Customer) {
   return customer._id;
@@ -93,10 +84,10 @@ export class DashboardComponent implements OnInit {
 
     // Form
     this.store.pipe(select(selectIsAddNewOpened)).subscribe(isAddPopupVisible => {
-      this.isAddPopupVisible = isAddPopupVisible;
+      this.isAddPopupVisible$ = of(isAddPopupVisible);
     });
     this.store.pipe(select(selectIsOverlay)).subscribe(isOverlayVisible => {
-      this.isOverlayVisible = isOverlayVisible;
+      this.isOverlayVisible$ = of(isOverlayVisible);
     });
 
     // Popups
@@ -119,47 +110,47 @@ export class DashboardComponent implements OnInit {
     })
    
   }
-  
 
   addCustomer(customer: Customer) {
-    this.customersService.createCustomer(customer).subscribe({
-      next: (createdCustomer: Customer) => {
+    try {
+      this.customersService.createCustomer(customer).subscribe({
+        next: (createdCustomer: Customer) => {
         this.store.dispatch(addCustomer({customer: createdCustomer}));
         this.customersService.getCustomer(createdCustomer._id);
       },
-      error: (error) => {
+        error: (error) => {
         console.error(error);
       }
     });
     this.popupsService.setCustomerCreated(true);
-  }
+
+    } catch(e) {
+      console.error(e)
+    }}
 
 deleteCustomer(id: string) {
-  this.customersService.deleteCustomer(id).subscribe({
-    next: () => {
+  try {
+     this.customersService.deleteCustomer(id).subscribe({
+      next: () => {
       this.store.dispatch(deleteCustomer({id}))
     },
-    error: (error) => {
+      error: (error) => {
       console.error(error)
     }
   })
 
   this.popupsService.setCustomerDeleted(true);
 
-}
+  } catch(e) {
+    console.error(e)
+  }}
 
  editCustomer() {
   this.store.dispatch(toggleIsEditCustomerOpened());
-  
-
  }
 
  private fetchCustomers() {
-   this.customersService.getCustomers();
-   
+  this.customersService.getCustomers();
  }
-
-
- 
 
 }
