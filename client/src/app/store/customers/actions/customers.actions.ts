@@ -12,7 +12,7 @@ export const addCustomerFail = createAction('[Customers] Add Customer Fail', pro
 export const deleteCustomer = createAction('[Customers] Delete customer', props<{id: string}>());
 
 export const searchUpdateCustomers = createAction('[Customers] Update customers on search', props<{customers: Customer[]}>())
-export const updateCustomer = createAction('[Customers] Update customer', props<{customerId: string, customer: Customer}>())
+export const updateCustomer = createAction('[Customers] Update customer', props<{id: string, updatedCustomer: Customer}>())
 
 export const updateSearchCustomer = createAction('[Customers] Find a customer', props<{searchedCustomer: string }>())
 

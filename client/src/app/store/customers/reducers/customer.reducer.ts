@@ -48,15 +48,10 @@ return {
         customersList: state.customersList.filter(customer => customer._id !== id)
       })),
 
-      on(updateCustomer, (state, { customerId, customer }) => {
-        const updatedCustomers = state.customersList.map(c => c._id === customerId ? customer : c);
-        return { ...state, customersList: updatedCustomers };
+      on(updateCustomer, (state, { id, updatedCustomer }) => {
+        const fetchedCustomer = state.customersList.map(c => c._id === id ? updatedCustomer : c);
+        return { ...state, customersList: fetchedCustomer };
       }),
-
-      on(searchUpdateCustomers, (state: CustomerState, {customers}) => ({
-        ...state,
-        customersList: customers
-      })),
 
       on(updateSearchCustomer, (state, { searchedCustomer }) => {
 

@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
     this.filteredCustomers$ = combineLatest([this.customers$, this.searchValue$]).pipe(map(
     ([customers, searchValue]) => {
       if (searchValue && searchValue.length > 0) {
-        return customers.filter((customer) => customer.firstName?.toLowerCase().includes(searchValue.toLowerCase()))
+        return customers.filter((customer) => customer.firstName?.toLowerCase().includes(searchValue.toLowerCase()) || customer.lastName?.toLowerCase().includes(searchValue.toLowerCase()))
       }
        else {
         return customers;

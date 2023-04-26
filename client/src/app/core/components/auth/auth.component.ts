@@ -12,16 +12,18 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class AuthComponent implements AfterViewInit {
 
 form: FormGroup;
-
-isSignUp:boolean =  false;
-isLogIn:boolean =  true;
 errorMessage: boolean;
+
+isSignUp =  false;
+isLogIn =  true;
+isPassConfirmed = false;
+
 
 constructor(public authService: AuthUserService, public isComponentLoaded: IsComponentLoadedService, private afAuth: AngularFireAuth) {
   this.form = new FormGroup({
     email: new FormControl ('', [Validators.required, Validators.email]),
     pass: new FormControl('', [Validators.required, this.passValidator]),
-    confirmPass: new FormControl('', [this.confirmPass.bind(this)])
+    confirmPass: new FormControl(null, [this.confirmPass.bind(this)])
   })
   this.errorMessage = false;
 }
@@ -34,7 +36,15 @@ passValidator(control: AbstractControl): ValidationErrors | null {
 confirmPass(control: AbstractControl): ValidationErrors | null {
 const originPass = control.parent?.get('pass')?.value;
 const confirmPass = control.value;
-return (originPass === confirmPass) ? null : { invalidConfirmPass: true };
+if (originPass === confirmPass) {
+  this.isPassConfirmed = true;
+  console.log(this.isPassConfirmed);
+  return null
+}
+else {
+return { invalidConfirmPass: true }
+}
+
 
 
 }

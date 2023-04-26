@@ -68,3 +68,7 @@ transform: translateY(0);
 .auth__switch-mode {
     cursor: pointer;
 }
+
+.disabled-btn {
+    background-color: lightgray !important;
+}

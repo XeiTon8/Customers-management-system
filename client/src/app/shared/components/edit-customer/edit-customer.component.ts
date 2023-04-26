@@ -73,8 +73,11 @@ export class EditCustomerComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
     const customer = this.getFormValue();
     await lastValueFrom(this.customersService.updateCustomer(id, customer));
-
-    this.store.dispatch(deleteCustomer({id}))
+    
+      this.customersService.getCustomer(id).subscribe((updatedCustomer => {
+      this.store.dispatch(updateCustomer({id, updatedCustomer}))
+    }))
+   
     this.store.dispatch(toggleIsEditCustomerOpened())
     this.popupsService.setCustomerCreated(true);
     this.router.navigate(['/dashboard']);

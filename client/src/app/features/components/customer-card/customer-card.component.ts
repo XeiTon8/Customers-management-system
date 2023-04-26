@@ -76,11 +76,11 @@ editCustomer() {
 }
 
 async submitNewValue() {
-  const customerId = this.route.snapshot.paramMap.get('id') ?? '';
-  const updatedCustomer = this.getUpdatedValue();
-  await lastValueFrom(this.customersService.updateCustomer(customerId, updatedCustomer));
-  const customer = await lastValueFrom(this.customersService.getCustomer(customerId))
-  this.store.dispatch(updateCustomer({customerId, customer}));
+  const id = this.route.snapshot.paramMap.get('id') ?? '';
+  const editedCustomer = this.getUpdatedValue();
+  await lastValueFrom(this.customersService.updateCustomer(id, editedCustomer));
+  const updatedCustomer = await lastValueFrom(this.customersService.getCustomer(id))
+  this.store.dispatch(updateCustomer({id, updatedCustomer}));
   this.isEditable = false;
 }
 

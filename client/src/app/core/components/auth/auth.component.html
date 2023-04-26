@@ -39,7 +39,7 @@
         <div *ngIf="form.controls['confirmPass'].errors?.['invalidConfirmPass']">Password does not match.</div>
     </div>
    
-    <button class="auth__confirm-btn" (click)="authService.signUp(userEmail.value, userPass.value)">Sign up</button>
+    <button class="auth__confirm-btn" [ngClass]="{'disabled-btn': !isPassConfirmed }" (click)="authService.signUp(userEmail.value, userPass.value)" [disabled]="!isPassConfirmed">Sign up</button>
     <span (click)="goLogIn()" class="auth__switch-mode">Already have an account? Log in</span>
 </form>
 

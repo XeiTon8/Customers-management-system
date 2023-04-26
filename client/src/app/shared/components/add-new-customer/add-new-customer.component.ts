@@ -58,6 +58,7 @@ constructor(private fb: FormBuilder, private store: Store, private closePopup: C
     const customer: Customer = this.customersForm.value;
     if (this.customersForm.valid) {
       this.formSubmitted.emit(customer);
+      this.customersForm.reset();
     }
     this.store.dispatch(toggleAddNewForm({elClass: "popup-choose__close-button"}))
  
