@@ -40,3 +40,4 @@ Instailled ngRx to get a better understanding of reactive programming and practi
 - [ ] Create sorting
 - [ ] Create filtering
 - [ ] Add total numbers of customers
+- [ ] Create avatar uploading and displaying
