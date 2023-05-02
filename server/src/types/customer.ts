@@ -13,4 +13,5 @@ export interface Customer {
         zipCode?: number
     };
     _id?: mongodb.ObjectId;
+    dateCreated?: Date;
 }

@@ -11,4 +11,5 @@ export interface Customer {
         zipCode?: any | null | undefined
     };
     _id: string;
+    dateCreated: Date | null;
 }

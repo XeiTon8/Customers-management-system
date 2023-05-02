@@ -44,7 +44,8 @@ export class EditCustomerComponent implements OnInit {
       city: [''],
       state: [''],
       zipCode: ['']
-    })
+    }),
+    dateCreated: [new Date()]
   })
 
   ngOnInit(): void {
@@ -71,7 +72,13 @@ export class EditCustomerComponent implements OnInit {
 
   async updateCustomer() {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
-    const customer = this.getFormValue();
+    const updatedDate = new Date();
+    
+
+    console.log(updatedDate);
+    const customer = await this.getFormValue();
+    customer.dateCreated = updatedDate;
+  
     await lastValueFrom(this.customersService.updateCustomer(id, customer));
     
       this.customersService.getCustomer(id).subscribe((updatedCustomer => {
@@ -95,7 +102,8 @@ export class EditCustomerComponent implements OnInit {
         city: this.editCustomerForm.get('address.city')?.value || '',
         state: this.editCustomerForm.get('address.state')?.value || '',
         zipCode: this.editCustomerForm.get('address.zipCode')?.value || ''
-      }
+      },
+      dateCreated: this.editCustomerForm.get('dateCreated')?.value || null
     };
   }
 

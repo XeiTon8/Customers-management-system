@@ -4,7 +4,7 @@ import { trigger, state, style, transition, animate} from '@angular/animations';
 // ngRx
 import {Store, select} from '@ngrx/store';
 import { AppState } from 'src/app/shared/store/reducers';
-import { deleteCustomer, toggleIsEditCustomerOpened } from 'src/app/store/customers/actions/customers.actions';
+import { deleteCustomer, updateCustomers, toggleIsEditCustomerOpened } from 'src/app/store/customers/actions/customers.actions';
 import { selectCustomers, selectIsEditOpened, selectSearchValue } from 'src/app/store/customers/selectors/customers.selector';
 import { selectIsAddNewOpened, selectIsOverlay } from 'src/app/shared/store/selectors/selectHeaderFormsState.selector';
 import { addCustomer } from 'src/app/store/customers/actions/customers.actions';
@@ -153,4 +153,32 @@ deleteCustomer(id: string) {
   this.customersService.getCustomers();
  }
 
+ sortCustomers(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  if (!select) {
+    return;
+  }
+  this.customers$.pipe(
+    map((customers) => {
+      const sortOption = select.value;
+      const copiedCustomers = [...customers];
+      switch (sortOption) {
+        case 'dateCreatedNew':
+          return copiedCustomers.sort((a, b) => {
+            const oldDate = a.dateCreated ? new Date(a.dateCreated) : null;
+            const newDate = b.dateCreated ? new Date(b.dateCreated) : null;
+            if (!oldDate || !newDate) {
+              return 0;
+            }
+            return newDate.getTime() - oldDate.getTime();
+          });
+        default:
+          return customers;
+      }
+    }),
+    distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
+  ).subscribe((sortedCustomers) => {
+    this.store.dispatch(updateCustomers({customers: sortedCustomers}));
+  });
+}
 }

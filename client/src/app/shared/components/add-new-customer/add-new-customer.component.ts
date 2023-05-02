@@ -13,7 +13,8 @@ import { ClosePopupButtonComponent } from '../close-popup-button/close-popup-but
 })
 export class AddNewCustomerComponent implements OnInit {
 
-@Input() initialState: BehaviorSubject<Customer> = new BehaviorSubject<Customer>({ _id: '', firstName: '', lastName: '', email: '', phone: null, address: { streetAddress: '', city: '', state: '', zipCode: null } })
+@Input() initialState: BehaviorSubject<Customer> = new BehaviorSubject<Customer>(
+{ _id: '', firstName: '', lastName: '', email: '', phone: null, address: { streetAddress: '', city: '', state: '', zipCode: null }, dateCreated: null })
 
 @Output() formsValueChanged = new EventEmitter<Customer>()
 
@@ -35,7 +36,8 @@ constructor(private fb: FormBuilder, private store: Store, private closePopup: C
         city: ['' || null, [Validators.required]],
         state: ['' || null, [Validators.required]],
         zipCode: ['' || null, [Validators.required]]
-      })
+      }),
+      dateCreated: [null]
     })
 
   }
@@ -55,8 +57,12 @@ constructor(private fb: FormBuilder, private store: Store, private closePopup: C
   }
 
   submitForm() {
-    const customer: Customer = this.customersForm.value;
+   
+   
     if (this.customersForm.valid) {
+      const currentDate = new Date();
+      this.customersForm.get('dateCreated')?.setValue(currentDate);
+      const customer: Customer = this.customersForm.value;
       this.formSubmitted.emit(customer);
       this.customersForm.reset();
     }

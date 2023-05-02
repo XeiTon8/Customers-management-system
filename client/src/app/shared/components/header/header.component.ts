@@ -7,7 +7,6 @@ import {Store, select} from '@ngrx/store';
 import { AppState } from '../../store/reducers';
 import { toggleAddNewForm } from 'src/app/shared/store/actions/forms/forms.actions';
 import { selectCustomers } from 'src/app/store/customers/selectors/customers.selector';
-import { searchUpdateCustomers } from 'src/app/store/customers/actions/customers.actions';
 import { updateSearchCustomer } from 'src/app/store/customers/actions/customers.actions';
 
 import {Observable, map} from 'rxjs'

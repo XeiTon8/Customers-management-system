@@ -22,7 +22,8 @@ export async function customersSchemaValidation(db: mongodb.Db) {
                         state: { bsonType: ["string", "null"] },
                         zipCode: { bsonType: ["string", "null"] }
                     }
-                }
+                },
+                dateCreated: {bsonType: ["string", "null"]}
             }
         }
     }

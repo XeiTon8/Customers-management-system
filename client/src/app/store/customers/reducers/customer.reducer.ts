@@ -1,11 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { Customer } from "src/app/features/models/ICustomer";
-import { addCustomer, toggleIsEditCustomerOpened } from "../actions/customers.actions";
-import { getCustomersSuccess } from "../actions/customers.actions";
-import { deleteCustomer } from "../actions/customers.actions";
-import { updateCustomer } from "../actions/customers.actions";
-import { searchUpdateCustomers } from "../actions/customers.actions";
-import { updateSearchCustomer } from "../actions/customers.actions";
+import { getCustomersSuccess, addCustomer, deleteCustomer, updateCustomer, updateCustomers, updateSearchCustomer, toggleIsEditCustomerOpened } from "../actions/customers.actions";
 
 export interface CustomerState {
   customersList: Customer[];
@@ -53,10 +48,15 @@ return {
         return { ...state, customersList: fetchedCustomer };
       }),
 
+      on(updateCustomers, (state, {customers}) => {
+        return {...state, customersList: customers}
+      }),
+
       on(updateSearchCustomer, (state, { searchedCustomer }) => {
 
         return { ...state, searchCustomer: searchedCustomer};
       }),
+
       on(toggleIsEditCustomerOpened, (state: CustomerState) => ({
         ...state, isEditOpened: !state.isEditOpened
       }))

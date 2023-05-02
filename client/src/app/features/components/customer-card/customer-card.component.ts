@@ -38,8 +38,10 @@ export class CustomerCardComponent implements OnInit {
       streetAddress: [''],
       city: [''],
       state: [''],
-      zipCode: ['']
-    })
+      zipCode: [''],
+     
+    }),
+     dateCreated: [new Date()]
   })
 
   ngOnInit(): void {
@@ -60,7 +62,8 @@ return this.store.pipe(
     city: customer.address?.city,
     state: customer.address?.state,
     zipCode: customer.address?.zipCode
-  }
+  },
+  dateCreated: customer.dateCreated
 })
     }
       if (!customer) {
@@ -91,10 +94,11 @@ getUpdatedValue() {
     lastName: this.editCustomerCard.get('lastName')?.value || '',
     email: this.editCustomerCard.get('email')?.value || '',
     phone: this.editCustomerCard.get('phone')?.value || '',
-    streetAddress: this.editCustomerCard.get('streetAddress') || '',
-    city: this.editCustomerCard.get('city') || '',
-    state: this.editCustomerCard.get('state') || '',
-    zipCode: this.editCustomerCard.get('zipCode') || '',
+    streetAddress: this.editCustomerCard.get('streetAddress')?.value || '',
+    city: this.editCustomerCard.get('city')?.value || '',
+    state: this.editCustomerCard.get('state')?.value || '',
+    zipCode: this.editCustomerCard.get('zipCode')?.value || '',
+    dateCreated: this.editCustomerCard.get('dateCreated')?.value || null,
   }
 }
 
