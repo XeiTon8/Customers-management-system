@@ -40,7 +40,7 @@ Divided the app into different modules:
 Instailled ngRx to get a better understanding of reactive programming and practice my skills with Flux architecture.
 
 ## 🔨 To-Do
-- [ ] Create sorting
+- [x] Create sorting
 - [ ] Create filtering
-- [ ] Add total numbers of customers
+- [x] Add total numbers of customers
 - [ ] Create avatar uploading and displaying
