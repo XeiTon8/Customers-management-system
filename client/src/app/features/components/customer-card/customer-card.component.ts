@@ -41,7 +41,8 @@ export class CustomerCardComponent implements OnInit {
       zipCode: [''],
      
     }),
-     dateCreated: [new Date()]
+     dateCreated: [null as Date | null],
+     dateUpdated: [null as Date | null]
   })
 
   ngOnInit(): void {
@@ -63,7 +64,8 @@ return this.store.pipe(
     state: customer.address?.state,
     zipCode: customer.address?.zipCode
   },
-  dateCreated: customer.dateCreated
+  dateCreated: customer.dateCreated,
+  dateUpdated: customer.dateUpdated
 })
     }
       if (!customer) {
@@ -99,6 +101,7 @@ getUpdatedValue() {
     state: this.editCustomerCard.get('state')?.value || '',
     zipCode: this.editCustomerCard.get('zipCode')?.value || '',
     dateCreated: this.editCustomerCard.get('dateCreated')?.value || null,
+    dateUpdated: this.editCustomerCard.get('dateUpdated')?.value || null,
   }
 }
 

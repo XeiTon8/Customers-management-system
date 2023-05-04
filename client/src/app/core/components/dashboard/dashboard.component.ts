@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
   isAddPopupVisible$ = this.store.pipe(select(selectIsAddNewOpened));;
   isOverlayVisible$ = this.store.pipe(select(selectIsOverlay));
   isEditOpened$ = this.store.pipe(select(selectIsEditOpened));
+  totalCustomers$!: Observable<number>;
 
   // Customers
   isCustomerCreated = false;
@@ -71,10 +72,19 @@ export class DashboardComponent implements OnInit {
       }
     });
 
+    this.totalCustomers$ = this.store.select(selectCustomers).pipe(
+      map(customers => customers.length)
+    );
+
     this.filteredCustomers$ = combineLatest([this.customers$, this.searchValue$]).pipe(map(
     ([customers, searchValue]) => {
       if (searchValue && searchValue.length > 0) {
-        return customers.filter((customer) => customer.firstName?.toLowerCase().includes(searchValue.toLowerCase()) || customer.lastName?.toLowerCase().includes(searchValue.toLowerCase()))
+        return customers.filter((customer) => 
+        customer.firstName?.toLowerCase().includes(searchValue.toLowerCase()) 
+        || customer.lastName?.toLowerCase().includes(searchValue.toLowerCase())
+        || customer.email?.toLowerCase().includes(searchValue.toLowerCase())
+        || customer.phone.toLowerCase().includes(searchValue.toLowerCase())
+        || customer.address?.city?.toLowerCase().includes(searchValue.toLowerCase()))
       }
        else {
         return customers;
@@ -113,10 +123,11 @@ export class DashboardComponent implements OnInit {
 
   addCustomer(customer: Customer) {
     try {
+      this.store.dispatch(addCustomer({customer: customer}));
       this.customersService.createCustomer(customer).subscribe({
         next: (createdCustomer: Customer) => {
-        this.store.dispatch(addCustomer({customer: createdCustomer}));
         this.customersService.getCustomer(createdCustomer._id);
+        
       },
         error: (error) => {
         console.error(error);
@@ -138,9 +149,7 @@ deleteCustomer(id: string) {
       console.error(error)
     }
   })
-
   this.popupsService.setCustomerDeleted(true);
-
   } catch(e) {
     console.error(e)
   }}
@@ -172,6 +181,47 @@ deleteCustomer(id: string) {
             }
             return newDate.getTime() - oldDate.getTime();
           });
+
+        case 'dateCreatedOld':
+          return copiedCustomers.sort((a, b) => {
+            const oldDate = a.dateCreated ? new Date(a.dateCreated) : null;
+            const newDate = b.dateCreated ? new Date(b.dateCreated) : null;
+            if (!oldDate || !newDate) {
+              return 0;
+            }
+            return oldDate.getTime() - newDate.getTime();
+
+          })
+
+          case 'nameA-Z':
+            return copiedCustomers.sort((a, b) => {
+            const firstCustomer = a.firstName;
+            const secondCustomer = b.firstName;
+            if (!firstCustomer || !secondCustomer) {
+              return 0
+            }
+            return firstCustomer.localeCompare(secondCustomer)
+            })
+
+            case 'nameZ-A':
+              return copiedCustomers.sort((a, b) => {
+                const firstCustomer = a.firstName;
+                const secondCustomer = b.firstName;
+                if (!firstCustomer || !secondCustomer) {
+                  return 0
+                }
+                return secondCustomer.localeCompare(firstCustomer)
+              })
+
+            case 'lastUpdated':
+              return copiedCustomers.sort((a, b) => {
+                const firstCustomer = a.dateUpdated !== null && a.dateUpdated !== undefined ? new Date(a.dateUpdated) : new Date(0);
+                const secondCustomer = b.dateUpdated !== null && b.dateUpdated !== undefined ? new Date(b.dateUpdated) : new Date(0);
+                if (!firstCustomer || !secondCustomer) {
+                  return 0
+                }
+                return secondCustomer.getTime() - firstCustomer.getTime();
+              })
         default:
           return customers;
       }

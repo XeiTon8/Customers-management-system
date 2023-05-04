@@ -10,12 +10,18 @@
 <div class="dashboard__container">
 
     <ng-container *ngIf="(customers$ | async)?.length; else noCustomers">
-        <select (change)="sortCustomers($event)">
-            <option >Name (A -> Z)</option>
-            <option>Name (Z -> A</option>
-            <option value="dateCreatedNew">Date created</option>
-            <option>Date updated</option>
-        </select>
+        <div class="options">
+            <span>Total customers: {{ totalCustomers$ | async }}</span>
+            <span class="sort-by">Sort by</span>
+            <select (change)="sortCustomers($event)">
+                <option value="nameA-Z">Name (A -> Z)</option>
+                <option value="nameZ-A">Name (Z -> A)</option>
+                <option value="dateCreatedNew">Date created (new)</option>
+                <option value="dateCreatedOld">Date created (old)</option>
+                <option value="lastUpdated">Last updated</option>
+            </select>
+        </div>
+        
         <table>
             <thead>
              <th class="avatar-th">Avatar</th>

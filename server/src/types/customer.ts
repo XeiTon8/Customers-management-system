@@ -14,4 +14,5 @@ export interface Customer {
     };
     _id?: mongodb.ObjectId;
     dateCreated?: Date;
+    dateUpdated?: Date;
 }

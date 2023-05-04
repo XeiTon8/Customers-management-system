@@ -75,11 +75,15 @@
     width: 130px;
     height: 40px;
     padding: 10px 16px 10px 20px;
+    transition: transform 0.3s ease-in-out;
 
     & span {
         color: #fff;
     }
-
+  
+    &:active {
+    transform: scale(0.5);
+    }
     
   }
 

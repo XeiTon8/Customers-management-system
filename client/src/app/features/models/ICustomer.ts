@@ -12,4 +12,5 @@ export interface Customer {
     };
     _id: string;
     dateCreated: Date | null;
+    dateUpdated: Date | null;
 }

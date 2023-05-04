@@ -14,7 +14,7 @@ import { ClosePopupButtonComponent } from '../close-popup-button/close-popup-but
 export class AddNewCustomerComponent implements OnInit {
 
 @Input() initialState: BehaviorSubject<Customer> = new BehaviorSubject<Customer>(
-{ _id: '', firstName: '', lastName: '', email: '', phone: null, address: { streetAddress: '', city: '', state: '', zipCode: null }, dateCreated: null })
+{ _id: '', firstName: '', lastName: '', email: '', phone: null, address: { streetAddress: '', city: '', state: '', zipCode: null }, dateCreated: null, dateUpdated: null})
 
 @Output() formsValueChanged = new EventEmitter<Customer>()
 
@@ -37,7 +37,8 @@ constructor(private fb: FormBuilder, private store: Store, private closePopup: C
         state: ['' || null, [Validators.required]],
         zipCode: ['' || null, [Validators.required]]
       }),
-      dateCreated: [null]
+      dateCreated: [null],
+      dateUpdated: [null]
     })
 
   }
