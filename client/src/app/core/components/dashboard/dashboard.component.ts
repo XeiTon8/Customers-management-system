@@ -121,13 +121,13 @@ export class DashboardComponent implements OnInit {
    
   }
 
-  addCustomer(customer: Customer) {
+   addCustomer(customer: Customer) {
     try {
-      this.store.dispatch(addCustomer({customer: customer}));
+   
       this.customersService.createCustomer(customer).subscribe({
         next: (createdCustomer: Customer) => {
         this.customersService.getCustomer(createdCustomer._id);
-        
+        this.store.dispatch(addCustomer({customer: createdCustomer}));
       },
         error: (error) => {
         console.error(error);
