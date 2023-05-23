@@ -11,6 +11,8 @@ App built with MEAN stack for better understanding connection between front-end 
  4. Delete - delete customers.
  + Auth;
  + Routing (each customer has its own page);
+ + Sorting (by name, date created and date updated);
+ + Showing total customers count.
 
 ## 🚀 Stack
 + Frontend: Angular, ngRx;
