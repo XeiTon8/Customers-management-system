@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate} from '@angular/animations';
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Buffer } from 'buffer';
 // ngRx
 import {Store, select} from '@ngrx/store';
 import { AppState } from 'src/app/shared/store/reducers';
@@ -30,7 +31,7 @@ import { Observable, take, filter, combineLatest, distinctUntilChanged, map, of}
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private store: Store<AppState>, private customersService: CustomersService, private popupsService: ConfirmPopupsService)  {}
+  constructor(private store: Store<AppState>, private customersService: CustomersService, private popupsService: ConfirmPopupsService, private sanitizer: DomSanitizer)  {}
 
   customers$: Observable<Customer[]> = new Observable<Customer[]>();
   filteredCustomers$:Observable<Customer[]> = new Observable<Customer[]>();
@@ -55,6 +56,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     // Fetch customers
     this.customers$ = this.store.pipe(select(selectCustomers));
+
+    
     this.customers$.pipe(
       filter((customers: Customer[]) => !!customers.length),
       distinctUntilChanged(),
@@ -62,9 +65,10 @@ export class DashboardComponent implements OnInit {
     ).subscribe(() => {
       // Customers are already in the store, no need to fetch them
       this.isDataFetched = true;
+
     });
 
-    this.customers$.subscribe(() => {
+        this.customers$.subscribe(() => {
       if (!this.isDataFetched) {
         this.fetchCustomers();
         this.isDataFetched = true;
@@ -87,7 +91,10 @@ export class DashboardComponent implements OnInit {
         || customer.address?.city?.toLowerCase().includes(searchValue.toLowerCase()))
       }
        else {
-        return customers;
+        return customers.map((customer) => ({
+          ...customer,
+          avatarUrl: this.decodeAvatar(customer.avatar!)
+        }));
        }
     }
     ))
@@ -230,5 +237,22 @@ deleteCustomer(id: string) {
   ).subscribe((sortedCustomers) => {
     this.store.dispatch(updateCustomers({customers: sortedCustomers}));
   });
+
+  
 }
+
+decodeAvatar(avatar: string): string {
+  const base64String = (avatar || '').replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+  const decodedImg = Buffer.from(base64String, 'base64');
+  const bytes = new Uint8Array(decodedImg.length);
+  for (let i = 0; i < decodedImg.length; i++) {
+    bytes[i] = decodedImg.readUInt8(i);
+  }
+  const blob = new Blob([bytes], { type: 'image/png' });
+  const objectURL = URL.createObjectURL(blob);
+  const safeUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+  return safeUrl.toString();
 }
+
+}
+

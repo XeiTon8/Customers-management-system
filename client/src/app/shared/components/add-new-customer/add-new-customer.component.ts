@@ -49,7 +49,7 @@ constructor(private fb: FormBuilder, private store: Store, private closePopup: C
       const reader = new FileReader();
       reader.onload = () => {
         this.customersForm.patchValue({
-          avatarUrl: reader.result
+          avatar: reader.result
          
         });
       };
@@ -63,7 +63,7 @@ constructor(private fb: FormBuilder, private store: Store, private closePopup: C
     if (this.customersForm.valid) {
       const currentDate = new Date();
       this.customersForm.get('dateCreated')?.setValue(currentDate);
-      const customer: Customer = this.customersForm.value;
+      const customer: Customer = { ...this.customersForm.value};
       this.formSubmitted.emit(customer);
       this.customersForm.reset();
     }

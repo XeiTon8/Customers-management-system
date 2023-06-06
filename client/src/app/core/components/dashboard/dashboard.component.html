@@ -34,7 +34,7 @@
             </thead>
             <tbody>
              <tr *ngFor="let customer of filteredCustomers$ | async; trackBy: trackByCustomerId">
-                 <td class="td-avatar"><img src="{{customer.avatarUrl}}"></td>
+                 <td class="td-avatar"><img [src]="customer.avatar" class="avatar"></td>
                  <td class="td-name">
                     <span [routerLink]="['customers/', customer._id]">{{customer.firstName}}</span> 
                     <span [routerLink]="['customers/', customer._id]">{{customer.lastName}}</span>
