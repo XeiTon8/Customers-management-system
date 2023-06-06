@@ -43,6 +43,6 @@ Instailled ngRx to get a better understanding of reactive programming and practi
 
 ## 🔨 To-Do
 - [x] Create sorting
-- [ ] Create filtering
+- [x] Create filtering
 - [x] Add total numbers of customers
-- [ ] Create avatar uploading and displaying
+- [x] Create avatar uploading and displaying
